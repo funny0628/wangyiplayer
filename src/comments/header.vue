@@ -13,7 +13,7 @@
     </div>
     <div class="right">
       <div class="inpt">
-        <input type="text" placeholder="搜索">
+        <input @focus="changebox" type="text" placeholder="搜索">
         <i class="iconfont icon-fangdajing"></i>
       </div>
       <span class="yifu"><i class="iconfont icon-yifu"></i></span>
@@ -22,7 +22,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    changebox(){
+      this.$store.commit('changehot',true)
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

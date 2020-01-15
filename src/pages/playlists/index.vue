@@ -1,14 +1,15 @@
 //推荐歌单
 <template>
-  <div class="playlist">
+  <div ref="playlist" class="playlist">
     <Topplaylistcard
       :name="topdata.name"
       :description="topdata.description"
       :coverImgUrl="topdata.coverImgUrl"
       :id="topdata.id"
+      :hasdata="topdata.more"
     />
     <div class="tap">
-      <Taps :taps="taps" />
+      <Taps :taps="taps" @gettap="Getitmetap" />
     </div>
     <ul class="playlist">
       <Playlistcard
@@ -19,18 +20,23 @@
         :imgurl="item.coverImgUrl"
         :desc="`播放量: ${item.playCount}`"
       />
+      <div v-if="list && total > list.length" class="pagenation">
+        <Pagenation
+          :current-page.sync="currentPage"
+          :total="total"
+          :page-size="PAGESIZE"
+          @current-change="onPageChange"
+        />
+      </div>
     </ul>
-    <div class="pagenation">
-      <Pagenation/>
-    </div>
- 
   </div>
 </template>
 
 <script>
 import Topplaylistcard from "../../comments/topplaylist-card";
 import Playlistcard from "../../comments/playlist-card.vue";
-
+import { scrollInto } from "../../utils/comment.js";
+const PAGESIZE = 50;
 const taplist = [
   "全部",
   "欧美",
@@ -56,15 +62,56 @@ export default {
     return {
       topdata: {},
       taps: taplist,
-      list: []
+      PAGESIZE: PAGESIZE,
+      list: [],
+      total: 0,
+      currentPage: 0,
+      tap: ""
     };
   },
-  async created() {
-    let data = await this.$request.Gethighquality({ limit: 1 });
-    let listdata = await this.$request.Getplaylist();
-    // console.log(listdata);
-    this.topdata = data.data.playlists[0];
-    this.list = listdata.data.playlists;
+  created() {
+    this.initData();
+  },
+  methods: {
+    initData() {
+      this.Getlistdata();
+      this.Gettopdata();
+    },
+
+    async Getlistdata() {
+      let { data } = await this.$request.Getplaylist({
+        limit: PAGESIZE,
+        offset: (this.currentPage - 1) * PAGESIZE,
+        cat: this.tap
+      });
+      // console.log(data);
+      this.list = data.playlists || [];
+      this.total = data.total;
+    },
+
+    async Gettopdata() {
+      let { data } = await this.$request.Gethighquality({
+        limit: 1,
+        cat: this.tap
+      });
+      // console.log(data);
+      this.topdata = data.playlists[0] || {};
+      this.topdata.more = data.more;
+    },
+
+    onPageChange(page) {
+      // console.log(page);
+      this.currentPage = page;
+      this.Getlistdata();
+      //使当前的元素滚动到浏览器可视窗口的最顶端
+      scrollInto(this.$refs.playlist);
+    },
+
+    Getitmetap(tap) {
+      // console.log(tap);
+      this.tap = tap;
+      this.initData();
+    }
   }
 };
 </script>
@@ -77,13 +124,14 @@ export default {
   .playlist {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
-  }
-  .pagenation {
-
-    margin-top: 20px;
-    text-align: right;
+    .pagenation {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
   }
 }
 </style>

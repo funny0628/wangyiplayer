@@ -33,15 +33,7 @@ export default {
       menu: menuslist
     };
   },
-created () {
-  console.log(menuslist);
-  
-},
-  methods: {
-    // todiscovery() {
-    //   this.$router.push("/discovery");
-    // }
-  }
+
 };
 </script>
 
@@ -52,6 +44,7 @@ created () {
   background-color: #ededed;
   text-align: left;
   padding-top: 15px;
+  box-sizing: border-box;
 
   .login {
     height: 50px;

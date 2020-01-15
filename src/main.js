@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index.js'
-// import store from './store/index.js'
+import store from './store/index.js'
 import './assets/styles/base.scss'
 import './assets/styles/iconfont.css'
 import ElementUI from 'element-ui';
@@ -19,6 +19,6 @@ Vue.use(global);
 
 new Vue({
   router,
-  // store,
+  store,
   render: function (h) { return h(App) }
 }).$mount('#app')

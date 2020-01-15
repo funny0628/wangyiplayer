@@ -1,9 +1,9 @@
 <template>
-  <div class="tap">
+  <div  class="tap">
     <!-- <router-link></router-link> -->
     <div
       v-if="classname"
-      :class="{detailtabel:index === activeindex}"
+      :class="{ detailtabel: index === activeindex }"
       @click="changeclass(index)"
       v-for="(item, index) in taps"
       :key="index"
@@ -13,7 +13,7 @@
     </div>
     <div
       v-if="!classname"
-      :class="{default:idx === activeindex}"
+      :class="{ default: idx === activeindex }"
       @click="changeclass(idx)"
       v-for="(itm, idx) in taps"
       :key="idx"
@@ -27,21 +27,24 @@
 <script>
 export default {
   name: "Taps",
-  props: ["taps", "classname","getindex"],
- 
+  props: ["taps", "classname", "getindex"],
+
   data() {
     return {
-      activeindex: 0,
+      activeindex: 0
     };
   },
- 
+  created () {
+    console.log(this.$listeners);
+    
+  },
+
   methods: {
     changeclass(index) {
       this.activeindex = index;
-      this.$emit("sendindex", index)
-    },
-   
-  },
+      this.$listeners.gettap(this.taps[index])
+    }
+  }
 };
 </script>
 
@@ -57,10 +60,10 @@ export default {
     &.default {
       color: #d33a31;
     }
-    
+
     &.detailtabel {
       color: #d33a31;
-      border-bottom: 2px solid red;
+      border-bottom: 2px solid #d33a31;
     }
   }
 }

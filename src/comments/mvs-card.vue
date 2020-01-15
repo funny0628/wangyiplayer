@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ mvdetail: classname }" @click="toMvDetail" class="mvscard">
+  <div  :class="{ mvdetail: classname }" @click="toMvDetail" class="mvscard">
     <div class="image">
       <img :src="imageurl" alt="" />
       <span class="num">
@@ -68,7 +68,7 @@ export default {
 
   &.mvdetail {
     width: 100%;
-    height: 86px;
+    height: 100px;
     padding:3px 0px;
     display: flex;
     .image {

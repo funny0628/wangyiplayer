@@ -1,56 +1,33 @@
 <template>
   <div class="comment">
-    <div class="total">精彩评论</div>
+    <!-- <div class="total">{{title}} <span v-if="count > 0">({{count}})</span></div> -->
     <div class="tabel">
       <div class="left">
         <img
-          src="https://p4.music.126.net/Pfj9UMjTAETp8PG9n5Tgxg==/109951164607357059.jpg?param=80y80"
+          :src="userimg"
           alt=""
         />
       </div>
       <div class="right">
         <p class="nameCom">
-          <span>雨霁___1:</span>
-          爱因斯坦：瓜娃子，我就想知道这tm又和我有啥子关系
+          <span>{{username}} : </span>
+          {{content}}
         </p>
-        <p class="time">2019-12-04 11:36:38</p>
-        <p class="zan"><i class="iconfont icon-zan"></i>&nbsp;&nbsp;10</p>
+        <p class="time">{{time}}</p>
+        <p class="zan"><i class="iconfont icon-zan"></i>&nbsp;&nbsp;{{likedCount}}</p>
       </div>
     </div>
-    <!-- <div class="tabel">
-      <div class="left">
-        <img
-          src="https://p4.music.126.net/Pfj9UMjTAETp8PG9n5Tgxg==/109951164607357059.jpg?param=80y80"
-          alt=""
-        />
-      </div>
-      <div class="right">
-        <p class="nameCom">
-          <span>雨霁___1:</span>
-          爱因斯坦：瓜娃子，我就想知道这tm又和我有啥子关系
-        </p>
-        <p class="time">2019-12-04 11:36:38</p>
-        <p class="zan"><i class="iconfont icon-zan"></i>&nbsp;&nbsp;10</p>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props:["content","username","userimg","userId","time","likedCount"]
+};
 </script>
 
 <style lang="scss" scoped>
 .comment {
-  .total {
-    font-size: 18px;
-    height: 50px;
-    line-height: 50px;
-    font-weight: 400;
-    color: black;
-    text-align: left;
-    margin-top: 20px;
-  }
   .tabel {
     font-size: 12px;
     color: black;
@@ -61,6 +38,7 @@ export default {};
     height: 80px;
 
     .left {
+      width: 40px;
       img {
         width: 40px;
         height: 40px;
@@ -70,16 +48,21 @@ export default {};
     }
     .right {
       position: relative;
-      width: 100%;
+      width: calc(100% - 50px);
       height: 100%;
       border-bottom: 1px solid #ccc;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
+      text-align: left;
       .nameCom {
+        width: 100%;
         color: #4a4a4a;
         line-height: 30px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         span {
           color: #517eaf;
         }

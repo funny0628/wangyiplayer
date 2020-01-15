@@ -1,6 +1,6 @@
 <template>
-  <div class="layout">
-    <!-- <Header /> -->
+  <!-- <div class="layout">
+    <Header /> -->
     <div class="layout-menu">
        <Menu/>
       <div class="content">
@@ -9,8 +9,8 @@
         </div>
       </div>
     </div>
-    <!-- <!-- <Miniplayer /> -->
-  </div>
+    <!-- <!-- <Miniplayer />
+  </div> -->
 </template>
 
 <script>
@@ -25,15 +25,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.layout {
-  // padding: 200px;
-  // height: 200px;
-  // width: 100%;
-  // background-color: pink;
-  // box-sizing: border-box;
-}
+
 .layout-menu {
-  height: calc(100vh - 70px - 66px);
+  height: 100%;
   display: flex;
   width: 100%;
   // background-color: pink;

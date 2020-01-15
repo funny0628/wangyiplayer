@@ -39,3 +39,4 @@ main.js -> App.vue
    --icon(播放图标)
 
 >base的组件为小的功能性的组件 ,注册为全局组件,如果全部意义导入到mian.js中,太过于冗余,所以使用require.context 实现工程的自动化,在untils的global 整体导入base中的所有的文件,使用的自定义插件的方式,
+

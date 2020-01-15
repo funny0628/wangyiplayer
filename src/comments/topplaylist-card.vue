@@ -1,5 +1,6 @@
+// 推荐歌单的top歌单
 <template>
-  <div @click="toDetail" class="top">
+  <div :class="{nodata:!hasdata}" @click="toDetail" class="top">
     <img
       class="image"
       :src="coverImgUrl"
@@ -14,7 +15,7 @@
         />
       </div>
       <div class="right">
-        <p class="jingpin">精品歌单</p>
+        <p v-if="hasdata" class="jingpin">精品歌单</p>
         <p class="title">{{name}}</p>
         <p class="jieshao">
          {{description}}
@@ -26,7 +27,7 @@
 
 <script>
 export default {
-  props:["name","id","coverImgUrl","description"],
+  props:["name","id","coverImgUrl","description","hasdata"],
   created () {
     
   },
@@ -44,7 +45,12 @@ export default {
   height: 220px;
   overflow: hidden;
   border-radius: 5px;
-
+  &.nodata {
+    background:url("http://img4.imgtn.bdimg.com/it/u=1681237413,285535555&fm=26&gp=0.jpg") center;
+     .container {
+       background-color: rgba(255,255,255,0);
+     }
+  }
   .image {
     position: absolute;
     width: 100%;

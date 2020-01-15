@@ -1,24 +1,45 @@
 <template>
-  <div v-if="url" class="play">
-    play-card.vue
-  </div>
+  <div ref="player" class="play"></div>
 </template>
 
 <script>
 import Player from "xgplayer";
 export default {
-  props:["url"],
+  props: ["url"],
+
   mounted() {
-       console.log(this);
-    let player = new Player({
-      id: "mse",
-      url: "1080"
-    });
+    this.initplay();
+   
+  },
+  methods: {
+    initplay() {
+      if (!this.url) return;
+      this.player = new Player({
+        el: this.$refs.player,
+        url: this.url,
+        width: "100%",
+        // height: "300",
+        videoInit: true,
+        playbackRate: [0.5, 0.75, 1, 1.5, 2],
+        lang: "zh-cn"
+      });
+    },
   
   },
-  created () {
-  
-      
+  watch: {
+    url(url,oldurl){
+        if(url && url !== oldurl){
+          
+          if(!this.player){
+            this.initplay()
+          }else {
+            //修改video的url
+            this.player.src = url;
+            //重新加载player
+            this.player.reload();
+          }
+        }
+    }
   }
 };
 </script>
@@ -26,6 +47,7 @@ export default {
 <style lang="scss" scoped>
 .play {
   width: 100%;
-  height: 300px;
+  height: 420px;
+  border-radius: 10px;
 }
 </style>

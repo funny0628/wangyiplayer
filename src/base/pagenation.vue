@@ -1,27 +1,24 @@
 <template>
-   <el-pagination
-
-  :page-size="20"
-  :pager-count="11"
-  layout="prev, pager, next"
-  :total="1000">
-</el-pagination>
+  <el-pagination 
+  layout="prev, pager, next" 
+  v-bind="$attrs" 
+  v-on="$listeners">
+  </el-pagination>
 </template>
 
 <script>
 import { Button, Pagination } from "element-ui";
 export default {
-    name:'Pagenation'
-}
+  name: "Pagenation"
+  // props: ["total", "pagesize"]
+};
 </script>
 
 <style lang="scss" scoped>
- /deep/.el-pager li.active {
+/deep/.el-pager li.active {
   color: #d33a31;
- 
 }
- /deep/.el-pager li:hover {
-    color: #d33a31;
-  }
-
+/deep/.el-pager li:hover {
+  color: #d33a31;
+}
 </style>

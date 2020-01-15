@@ -2,7 +2,10 @@
   <div id="app">
     <div id="nav">
       <Header />
-      <router-view></router-view>
+      <div class="center">
+        <router-view></router-view>
+        <Search/>
+      </div>
       <Miniplayler />
     </div>
   </div>
@@ -10,20 +13,19 @@
 <script>
 import Header from "./comments//header.vue";
 import Miniplayler from "./comments/miniplayler.vue";
+import Search from './comments/header-search.vue'
 export default {
   components: {
     Header,
-    Miniplayler
+    Miniplayler,
+    Search
   }
 };
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.center {
+   height: calc(100vh - 75px - 66px);
+   position: relative;
 }
 </style>

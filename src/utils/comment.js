@@ -37,3 +37,8 @@ Vue.filter('formatdate',function(time){
 Vue.filter('formatbrs', function(brs){
   
 })
+
+
+export function scrollInto(dom){
+  dom.scrollIntoView({behavior :"smooth"})
+}

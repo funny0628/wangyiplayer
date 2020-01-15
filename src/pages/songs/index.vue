@@ -1,21 +1,21 @@
 //最新音乐
 <template>
   <div class="songs">
-      <Taps :taps="taps" />
-       <ul>
-          <Listtabel
-          v-for="(item,index) in songlist"
-          :mp3Url="item.mp3Url"
-          :songname="item.name"
-          :albumname="item.album.name"
-          :artistname="item.album.artists | formatartis"
-          :duration="item.duration | formatduration"
-          :picUrl="item.album.picUrl"
-          :id="item.id"
-          :num="index | formatnumber"
-          :mvid="item.mvid"
-          />
-      </ul>
+    <Taps :taps="taps" @gettap="Getitmetap" />
+    <ul>
+      <Listtabel
+        v-for="(item, index) in songlist"
+        :mp3Url="item.mp3Url"
+        :songname="item.name"
+        :albumname="item.album.name"
+        :artistname="item.album.artists | formatartis"
+        :duration="item.duration | formatduration"
+        :picUrl="item.album.picUrl"
+        :id="item.id"
+        :num="index | formatnumber"
+        :mvid="item.mvid"
+      />
+    </ul>
   </div>
 </template>
 
@@ -32,21 +32,29 @@ export default {
   data () {
     return {
       taps:taplist,
-      songlist:[]
+      songlist:[],
+      type:0
     }
   },
   components: {
     Listtabel
   },
-  async created () {
-    let {data} = await this.$request.Getnewsong({type:0});
-    this.songlist = data.data
-    // console.log(data);
-    
+   created () {
+     this.initdata()
+  },
+  methods: {
+    async initdata(){
+      let {data} = await this.$request.Getnewsong({type:this.type});
+      this.songlist = data.data
+      // console.log(data);
+    },
+    Getitmetap(tap){
+      // console.log(tap);//{tap:"欧美",type:96},
+      this.type = tap.type
+      this.initdata()
+    }
   }
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

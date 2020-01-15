@@ -7,7 +7,8 @@ import Songs from '../pages/songs/index.vue'
 import Mvs from '../pages/mvs/index.vue'
 import Playlist from '../pages/playlist-detail/index.vue'
 import Mv from '../pages/mv/index.vue'
-// import Text from '../text/index.vue'
+import Search from '../pages/search/index.vue'
+import Song from '../pages/search/songs.vue'
 
 Vue.use(VueRouter)
 
@@ -62,7 +63,26 @@ const routes = [
         name: 'discovery',
         component: Discovery,
       },
-      ...menuslist
+      ...menuslist,
+      {
+        path: '/playlist/:id',
+        name: 'playlist',
+        component: Playlist,
+      },
+      {
+        path: '/search/:name',
+        name: 'search',
+        component: Search,
+        children:[
+          {
+            path: 'song',
+            name: 'song',
+            component: Song,
+          },
+        ]
+      },
+     
+
     ]
   },
 

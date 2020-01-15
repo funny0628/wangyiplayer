@@ -1,9 +1,9 @@
 //最新mvs
 <template>
   <div class="mvs">
-    <Mvtop v-bind="listlocal" />
-    <Mvtop v-bind="listtype" />
-    <Mvtop v-bind="listsort" />
+    <Mvtop v-bind="listlocal" @getarea="Getarea" />
+    <Mvtop v-bind="listtype" @gettype="Gettype" />
+    <Mvtop v-bind="listsort" @getorder="Getorder" />
     <div class="mvtabel">
       <Mvscard
         v-for="(item, index) in list"
@@ -16,14 +16,22 @@
         :duration="item.duration"
       />
     </div>
+    <Pagenation
+      v-if="list && list.length > 0"
+      class="pagenation"
+      :total="total"
+      :page-size="pagesize"
+      @current-change="onPageChange"
+      :current-page.sync="currentPage"
+    />
   </div>
 </template>
 
 <script>
 import Mvtop from "../../comments/mvtop.vue";
-import Mvscard from '../../comments/mvs-card.vue'
+import Mvscard from "../../comments/mvs-card.vue";
 import { local, types, sort } from "./list.js";
-import { create } from "domain";
+
 export default {
   components: {
     Mvtop,
@@ -31,18 +39,53 @@ export default {
   },
   data() {
     return {
+      //mvtop本地数据
       listlocal: local,
       listtype: types,
       listsort: sort,
-      list: []
+      //mvlist数据
+      list: [],
+      total: 0,
+      pagesize: 48,
+      currentPage: 0,
+      area: "",
+      type: "",
+      order: ""
     };
   },
-  async created() {
-    let {data} = await this.$request.Getmv();
-    console.log(data);
-    this.list = data.data;
-    console.log(this.list);
-    
+  created() {
+    this.initdata();
+  },
+  methods: {
+    async initdata() {
+      let { data } = await this.$request.Getmv({
+        limit: this.pagesize,
+        // offset: (this.currentPage - 1) * this.pagesize,
+        area: this.area,
+        type: this.type,
+        order: this.order
+      });
+      // console.log(data);
+      this.list = data.data;
+      this.total = data.count;
+    },
+    Getarea(index) {
+      this.area = this.listlocal.list[index].tap;
+      this.initdata();
+    },
+    Gettype(index) {
+      this.type = this.listtype.list[index].tap;
+      this.initdata();
+    },
+    Getorder(index) {
+      this.order = this.listsort.list[index].tap;
+      this.initdata();
+    },
+    onPageChange(index) {
+      // console.log(index);
+      this.currentPage = index;
+      this.initdata();
+    }
   }
 };
 </script>
@@ -54,6 +97,10 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+  }
+  .pagenation {
+    margin-top: 20px;
+    text-align: right;
   }
 }
 </style>
