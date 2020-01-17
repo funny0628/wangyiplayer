@@ -20,6 +20,10 @@ img {
 i {
     font-style: normal;
 }
+body::selection {
+    background: #ff5500;
+    color: #fff;
+  }
 
 // /deep/.el-icon-loading.el-loading-spinner .path {
 //     stroke: #d33a31;

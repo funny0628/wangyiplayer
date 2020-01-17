@@ -8,7 +8,9 @@ import Mvs from '../pages/mvs/index.vue'
 import Playlist from '../pages/playlist-detail/index.vue'
 import Mv from '../pages/mv/index.vue'
 import Search from '../pages/search/index.vue'
-import Song from '../pages/search/songs.vue'
+import SearchSong from '../pages/search/songs.vue'
+import SearchSonglist from '../pages/search/songlist.vue'
+import SearchMv from '../pages/search/mv.vue'
 
 Vue.use(VueRouter)
 
@@ -75,9 +77,23 @@ const routes = [
         component: Search,
         children:[
           {
+            path: '/search/:name',
+            redirect:"song",
+          },
+          {
             path: 'song',
-            name: 'song',
-            component: Song,
+            name: 'songs',
+            component: SearchSong,
+          },
+          {
+            path: 'playlist',
+            name: 'playlists',
+            component: SearchSonglist,
+          },
+          {
+            path: 'mv',
+            name: 'mvs',
+            component: SearchMv,
           },
         ]
       },

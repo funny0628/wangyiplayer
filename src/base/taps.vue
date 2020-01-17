@@ -34,15 +34,11 @@ export default {
       activeindex: 0
     };
   },
-  created () {
-    console.log(this.$listeners);
-    
-  },
 
   methods: {
     changeclass(index) {
       this.activeindex = index;
-      this.$listeners.gettap(this.taps[index])
+      this.$listeners.gettap(this.taps[this.activeindex])
     }
   }
 };

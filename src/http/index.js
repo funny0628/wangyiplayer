@@ -88,7 +88,10 @@ request.Gethotsearch = ()=>{
     return request.get('/search/hot')
 }
 
-
+//search songs
+request.Getsongs = (params)=>{
+    return request.get('/search',{params})
+}
 
 
 

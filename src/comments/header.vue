@@ -13,7 +13,7 @@
     </div>
     <div class="right">
       <div class="inpt">
-        <input @focus="changebox" type="text" placeholder="搜索">
+        <input @click="openbox" type="text" placeholder="搜索">
         <i class="iconfont icon-fangdajing"></i>
       </div>
       <span class="yifu"><i class="iconfont icon-yifu"></i></span>
@@ -24,9 +24,12 @@
 <script>
 export default {
   methods: {
-    changebox(){
+    openbox(event){
+      //阻止事件冒泡
+      event.stopPropagation();
       this.$store.commit('changehot',true)
-    }
+    },
+   
   }
 };
 </script>

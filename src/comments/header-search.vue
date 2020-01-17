@@ -1,16 +1,14 @@
 <template>
-  <div v-if="show" class="search">
+  <div ref="search" @click="closebox" v-if="show" class="search">
     <div v-if="hotdata && hotdata.length" class="hot">
       <div class="title">热门搜索</div>
-      <Tag 
-      v-for="item  in hotdata"
-      :tag="item.first"
-      @todetail="Todetail"
-      />
+      <Tag v-for="item in hotdata" :tag="item.first" @todetail="Todetail" />
     </div>
     <div v-if="historydata && historydata.length" class="history">
       <div class="title">历史搜索</div>
-      <Tag />
+      <Tag 
+      v-for="item in historydata" :tag="item"  @todetail="Todetail"
+      />
     </div>
   </div>
 </template>
@@ -19,26 +17,33 @@
 export default {
   data() {
     return {
-      hotdata:[],
-      historydata:[],
+      hotdata: [],
+      historydata: []
     };
   },
-  async created () {
-    console.log(this.$store.state.hotlist);
-    
-    let {data} = await this.$request.Gethotsearch();
-    console.log(data);
-    this.hotdata = data.result.hots
-    
+  async created() {
+    let { data } = await this.$request.Gethotsearch();
+    // console.log(data);
+    this.hotdata = data.result.hots;
   },
+
   methods: {
-    Todetail(name){
-      console.log(name);
+    Todetail(name) {
+      let hasexist = this.historydata.includes(name)
+      if(hasexist){
+        return
+      }else{
+        this.historydata.unshift(name)
+      }
+    },
+    closebox(e) {
+      //阻止事件的捕获
+      e.stopPropagation();
     }
   },
   computed: {
-    show(){
-      return this.$store.state.hotlist
+    show() {
+      return this.$store.state.hotlist;
     }
   }
 };
@@ -51,14 +56,14 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 99;
+  z-index: 999;
   box-shadow: -2px -2px 8px 1px rgba(0, 0, 0, 0.2);
   padding: 25px;
   font-size: 16px;
   box-sizing: border-box;
   background-color: #fff;
   color: #4a4a4a;
-  
+
   .history {
     margin-top: 30px;
   }

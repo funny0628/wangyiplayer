@@ -9,7 +9,12 @@ export default {
     name:"Tag",
     methods: {
         torouter(){
-            this.$router.push(`/search/${this.$attrs.tag}`);
+            if(this.$route.params.name && this.$route.params.name === this.$attrs.tag){
+                return
+            }else{
+                this.$router.push(`/search/${this.$attrs.tag}`);
+            }
+            
             this.$listeners.todetail(this.$attrs.tag)
         }
     }

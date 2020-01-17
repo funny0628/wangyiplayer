@@ -1,26 +1,42 @@
 <template>
   <div class="tabel">
-    <li :class="{detailtitle:classname}">
-      <p class="num">{{num}}</p>
-      <p class="image">
-               <img
-          :src="picUrl"
-        />
-        <Icon cssname="listtabel"/>
+    <li :class="{ detailtitle: classname }">
+      <p class="num">{{ num }}</p>
+      <p v-if="picUrl" class="image">
+        <img :src="picUrl" />
+        <Icon cssname="listtabel" />
       </p>
       <p class="songname">
-        {{songname}} <i v-if="mvid" class="iconfont icon-shipinbofangyingpian"></i>
+        <span class="name"
+          >{{ songname }} &nbsp;&nbsp;<i
+            v-if="mvid"
+            class="iconfont icon-shipinbofangyingpian"
+          ></i
+        ></span>
+        <span class="juname" v-if="alias">{{ alias }}</span>
       </p>
-      <p class="singername">{{artistname}}</p>
-      <p class="name">{{albumname}}</p>
-      <p class="time">{{duration}}</p>
+      <p class="singername">{{ artistname }}</p>
+      <p class="name">{{ albumname }}</p>
+      <p class="time">{{ duration }}</p>
     </li>
   </div>
 </template>
 
 <script>
 export default {
-    props:["mp3Url","songname","artistname","duration","albumname","picUrl","id","num","mvid","classname"]
+  props: [
+    "mp3Url",
+    "songname",
+    "artistname",
+    "duration",
+    "albumname",
+    "alias",
+    "picUrl",
+    "id",
+    "num",
+    "mvid",
+    "classname"
+  ]
 };
 </script>
 
@@ -49,8 +65,8 @@ li {
     }
     &.image {
       width: 10%;
-        position: relative;
-        img {
+      position: relative;
+      img {
         width: 70px;
         height: 70px;
         border-radius: 5px;
@@ -59,8 +75,21 @@ li {
     }
     &.songname {
       width: 25%;
-      i {
-        color: #d33a31;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .name {
+        width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: black;
+        i {
+          color: #d33a31;
+        }
+      }
+      .juname {
+        color: #ccc;
       }
     }
     &.singername {
@@ -75,19 +104,17 @@ li {
   }
   &.detailtitle {
     color: #909090;
-      height: 50px;
-      line-height: 50px;
-      .songname {
-        color: black;
+    height: 50px;
+    line-height: 50px;
+    .songname {
+      color: black;
+    }
+    .image {
+      opacity: 0;
+      img {
+        height: 30px;
       }
-      .image {
-        opacity: 0;
-        img {
-          height: 30px;
-          
-        }
-        
-      }
+    }
   }
 }
 </style>
