@@ -10,7 +10,13 @@ export default new Vuex.Store({
     //搜索歌曲数据
     hotdata: [],
     //搜索歌曲总数据
-    total: 0
+    total: 0,
+    //歌曲的url
+    songUrl:"",
+    songtime:0,
+    songname:'',
+    picUrl:'',
+    artistname:''
   },
   mutations: {
     //热门搜索列表是否显示
@@ -22,6 +28,16 @@ export default new Vuex.Store({
     DATA(state, payload) {
       state.hotdata = payload.hotdata
       state.total = payload.total
+      
+    },
+
+    //播放音乐的url
+    SongUrl(state,payload){
+      state.songUrl = payload.url  
+      state.songtime = payload.duration   
+      state.picUrl = payload.picUrl  
+      state.songname = payload.songname,
+      state.artistname = payload.artistname
     }
   },
   actions: {
@@ -42,6 +58,18 @@ export default new Vuex.Store({
       }
 
       context.commit('DATA', { hotdata, total })
+    },
+    //音乐播放
+    async Getplayurl({commit},payload){
+      let {data} = await Vue.prototype.$request.Getsongurl({id:payload.id});
+      console.log(data);
+      commit('SongUrl',{
+        url:data.data[0].url,
+        duration:payload.duration,
+        picUrl:payload.picUrl,
+        songname:payload.songname,
+        artistname:payload.artistname
+      })
     }
   },
   modules: {

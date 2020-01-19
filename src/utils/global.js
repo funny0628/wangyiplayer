@@ -1,4 +1,4 @@
-import {Tabs} from 'element-ui'
+import {Popover} from 'element-ui'
 
 
 export const global = {

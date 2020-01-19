@@ -1,6 +1,6 @@
 <template>
   <div class="tabel">
-    <li :class="{ detailtitle: classname }">
+    <li @click="toplay(id)" :class="{ detailtitle: classname }">
       <p class="num">{{ num }}</p>
       <p v-if="picUrl" class="image">
         <img :src="picUrl" />
@@ -36,7 +36,18 @@ export default {
     "num",
     "mvid",
     "classname"
-  ]
+  ],
+  methods:{
+     toplay(id){
+      this.$store.dispatch("Getplayurl",{
+        id:this.id,
+        duration:this.duration,
+        picUrl:this.picUrl,
+        songname:this.songname,
+        artistname:this.artistname
+      })
+    }
+  }
 };
 </script>
 

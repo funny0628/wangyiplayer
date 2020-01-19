@@ -93,6 +93,11 @@ request.Getsongs = (params)=>{
     return request.get('/search',{params})
 }
 
+//获取音乐的播放地址
+request.Getsongurl = (params)=>{
+    return request.get('/song/url',{params})
+}
+
 
 
 

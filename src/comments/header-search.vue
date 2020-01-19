@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: F
+ * @Date: 2020-01-15 14:19:45
+ * @LastEditors  : sueRimn
+ * @LastEditTime : 2020-01-19 11:12:50
+ -->
 <template>
   <div ref="search" @click="closebox" v-if="show" class="search">
     <div v-if="hotdata && hotdata.length" class="hot">
@@ -6,9 +14,7 @@
     </div>
     <div v-if="historydata && historydata.length" class="history">
       <div class="title">历史搜索</div>
-      <Tag 
-      v-for="item in historydata" :tag="item"  @todetail="Todetail"
-      />
+      <Tag v-for="item in historydata" :tag="item" @todetail="Todetail" />
     </div>
   </div>
 </template>
@@ -25,15 +31,16 @@ export default {
     let { data } = await this.$request.Gethotsearch();
     // console.log(data);
     this.hotdata = data.result.hots;
+    // this.historydata = localStorage.getItem("hisSearch") || []
   },
 
   methods: {
     Todetail(name) {
-      let hasexist = this.historydata.includes(name)
-      if(hasexist){
-        return
-      }else{
-        this.historydata.unshift(name)
+      let hasexist = this.historydata.includes(name);
+      if (hasexist) {
+        return;
+      } else {
+        this.historydata.unshift(name);
       }
     },
     closebox(e) {
@@ -41,6 +48,16 @@ export default {
       e.stopPropagation();
     }
   },
+  // mounted() {
+  //   window.onbeforeunload = function() {
+  //     console.log(this.historydata);
+  //     localStorage.setItem("hisSearch",this.historydata);
+      
+  //   };
+  // },
+  // destroyed() {
+  //   window.onbeforeunload = null;
+  // },
   computed: {
     show() {
       return this.$store.state.hotlist;
