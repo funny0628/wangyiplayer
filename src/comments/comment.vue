@@ -4,7 +4,7 @@
     <div class="tabel">
       <div class="left">
         <img
-          :src="userimg"
+          :src="imgurl = userimg ? userimg : localimgurl"
           alt=""
         />
       </div>
@@ -22,7 +22,12 @@
 
 <script>
 export default {
-  props:["content","username","userimg","userId","time","likedCount"]
+  props:["content","username","userimg","userId","time","likedCount"],
+ data(){
+   return {
+      localimgurl:"https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=333354829,1245503780&fm=26&gp=0.jpg"
+   }
+ }
 };
 </script>
 

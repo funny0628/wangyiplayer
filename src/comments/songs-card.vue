@@ -1,6 +1,6 @@
 <template>
   
-    <div class="item">
+    <div class="item" @click="toplay(id)">
       <span class="serialnumber">{{ idsc | formatnumber}}</span>
       <div class="image">
            <img :src="imageurl"/>
@@ -18,7 +18,18 @@
 export default {
     components: {
     },
-   props:["imageurl","songname", "idsc","artists"],
+   props:["imageurl","songname", "idsc","artists","id","duration"],
+   methods:{
+     toplay(id){
+        this.$store.dispatch("Getplayurl",{
+        id:this.id,
+        duration:this.duration,
+        picUrl:this.imageurl,
+        songname:this.songname,
+        artistname:this.artistname
+      })
+     }
+   }
 
 };
 </script>

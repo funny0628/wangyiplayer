@@ -9,6 +9,8 @@
          :imageurl="item.picUrl"
          :songname="item.song.name"
          :artists="item.song.artists[0].name"
+         :id="item.id"
+         :duration="item.song.mMusic.playTime | formatduration"
          />
      </div>
      

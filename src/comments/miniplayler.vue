@@ -1,7 +1,7 @@
 <template>
   <div class="miniplayer">
     <div class="song">
-      <div v-show="songUrl" class="left">
+      <div @click="toshowLyric" v-show="songUrl" class="left">
         <img :src="picUrl" alt="" />
       </div>
       <div v-show="songUrl" class="right">
@@ -13,7 +13,7 @@
     </div>
     <div class="control">
       <i class="left iconfont icon-shangyiqu"></i>
-      <i @click="toplay" v-if="!songUrl || !isplay" class="center iconfont icon-bofang"></i>
+      <i @click="toplay" v-if="!songUrl || isplay" class="center iconfont icon-bofang"></i>
       <i v-else @click="toplay" class="center iconfont icon-zanting"></i>
       <i class="right iconfont icon-xiayiqu"></i>
     </div>
@@ -23,17 +23,20 @@
       <i class="list iconfont icon-liebiaoxiangyou"></i>
     </div>
     <span class="progress-bar"></span>
-    <audio :src="songUrl" type="audio/mpeg" ref="myaudio"></audio>
+    <audio :src="songUrl" autoplay type="audio/mpeg" ref="myaudio"></audio>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+// import { mapMutations } from 'vuex'
+import store from "vuex";
 import { Message } from 'element-ui';
 export default {
   data() {
     return {
-      isplay: false
+      isplay: false,
+      toshow:false
     };
   },
   computed: {
@@ -41,19 +44,23 @@ export default {
   },
   methods: {
     toplay() {
-      console.log(this.$refs.myaudio.src);
       if (!this.songUrl) {
         return;
       } else {
         if (!this.isplay) {
-          this.$refs.myaudio.play();
+          this.$refs.myaudio.pause();
           this.isplay = true;
         } else {
-          this.$refs.myaudio.pause();
+          this.$refs.myaudio.play();
           this.isplay = false;
         }
       }
-    }
+    },
+    toshowLyric(){
+      console.log(this.toshow,!this.toshow)
+      this.$store.commit('ShowLyric',!this.toshow);
+      this.toshow = !this.toshow;
+    },
   }
 };
 </script>
@@ -66,7 +73,7 @@ export default {
   border-top: 2px solid #ccc;
   display: flex;
   position: relative;
-
+  overflow: hidden;
   div {
     flex: 1;
     &.song {

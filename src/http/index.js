@@ -98,6 +98,10 @@ request.Getsongurl = (params)=>{
     return request.get('/song/url',{params})
 }
 
+//获取歌单评论
+request.songSheetComment = (params)=>{
+    return request.get('/comment/playlist',{params})
+}
 
 
 

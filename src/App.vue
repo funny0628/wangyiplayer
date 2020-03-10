@@ -5,20 +5,27 @@
       <div class="center">
         <router-view></router-view>
         <Search />
+        <Lyric v-if="showLyric"/>
       </div>
       <Miniplayler />
     </div>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 import Header from "./comments//header.vue";
 import Miniplayler from "./comments/miniplayler.vue";
 import Search from "./comments/header-search.vue";
+import Lyric from "./comments/lyric.vue";
 export default {
   components: {
     Header,
     Miniplayler,
-    Search
+    Search,
+    Lyric
+  },
+   computed: {
+    ...mapState(["showLyric"])
   },
   methods: {
     closebox(event) {

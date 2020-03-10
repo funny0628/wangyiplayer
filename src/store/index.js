@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import Miniplayer from '../comments/miniplayler.vue'
+ 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -16,7 +17,8 @@ export default new Vuex.Store({
     songtime:0,
     songname:'',
     picUrl:'',
-    artistname:''
+    artistname:'',
+    showLyric:false,
   },
   mutations: {
     //热门搜索列表是否显示
@@ -38,6 +40,12 @@ export default new Vuex.Store({
       state.picUrl = payload.picUrl  
       state.songname = payload.songname,
       state.artistname = payload.artistname
+    },
+
+    //显示歌词
+    ShowLyric(state,payload){
+      console.log(payload,"000000000000000")
+      state.showLyric = payload
     }
   },
   actions: {

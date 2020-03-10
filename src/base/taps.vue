@@ -9,7 +9,7 @@
       :key="index"
       class="taps"
     >
-      {{ item.tap || item }}
+      {{ item.tap || item }} <span v-if="index === 1">({{totalcomment}})</span>
     </div>
     <div
       v-if="!classname"
@@ -27,7 +27,7 @@
 <script>
 export default {
   name: "Taps",
-  props: ["taps", "classname", "getindex"],
+  props: ["taps", "classname", "getindex","totalcomment"],
 
   data() {
     return {
@@ -38,7 +38,11 @@ export default {
   methods: {
     changeclass(index) {
       this.activeindex = index;
-      this.$listeners.gettap(this.taps[this.activeindex])
+     if(this.$listeners.gettap){
+       this.$listeners.gettap(this.taps[this.activeindex])
+     }else if(this.$listeners.sendindex){
+       this.$listeners.sendindex(this.activeindex)
+     }
     }
   }
 };
